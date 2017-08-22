@@ -50,7 +50,6 @@ class Work extends Command
 
     /**
      * configure
-     *
      */
     protected function configure()
     {
@@ -109,48 +108,52 @@ class Work extends Command
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null|void
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $worker_factory = $this->worker_factory;
+        if ($input->getOption('background')) {
+            $this->workInBackground($input);
 
-        /** @var array $queues */
-        $queues = $input->getArgument('queues');
+            return 0;
+        }
 
-        $background = $input->getOption('background');
+        $this->workInForeground($input);
 
-        if ($background) {
-            $worker_count = $input->getOption('workers');
+        return 0;
+    }
 
-            for ($i = 0; $i < $worker_count; ++$i) {
-                $pid = pcntl_fork();
+    /**
+     * workInBackground
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     */
+    protected function workInBackground(InputInterface $input): void
+    {
+        $worker_count = $input->getOption('workers');
 
-                if ($pid == -1) {
-                    die(sprintf("Could not fork worker %d\n", $i));
-                } elseif (!$pid) {
-                    $pidfile = $input->getOption('pidfile');
-                    if ($pidfile && $i == 0) {
-                        $this->writePidFile($pidfile);
-                    }
+        for ($i = 0; $i < $worker_count; ++$i) {
+            $pid = pcntl_fork();
 
-                    /** @var \QueueJitsu\Worker\Worker $worker */
-                    $worker = $worker_factory($queues);
-
-                    $worker($input->getOption('interval'));
-                    break;
+            if ($pid == -1) {
+                die(sprintf("Could not fork worker %d\n", $i));
+            } elseif (!$pid) {
+                $pidfile = $input->getOption('pidfile');
+                if ($pidfile && $i == 0) {
+                    $this->writePidFile($pidfile);
                 }
-            }
-        } else {
-            $pidfile = $input->getOption('pidfile');
-            if ($pidfile) {
-                $this->writePidFile($pidfile);
-            }
 
-            /** @var \QueueJitsu\Worker\Worker $worker */
-            $worker = $worker_factory($queues);
+                $worker_factory = $this->worker_factory;
 
-            $worker($input->getOption('interval'));
+                /** @var array $queues */
+                $queues = $input->getArgument('queues');
+
+                /** @var \QueueJitsu\Worker\Worker $worker */
+                $worker = $worker_factory($queues);
+
+                $worker($input->getOption('interval'));
+                break;
+            }
         }
     }
 
@@ -160,15 +163,35 @@ class Work extends Command
      * @param string $pidfile
      * @param null $pid
      */
-    private
-    function writePidFile(
-        string $pidfile,
-        $pid = null
-    ) {
+    private function writePidFile(string $pidfile, $pid = null)
+    {
         if (is_null($pid)) {
             $pid = getmypid();
         }
 
         file_put_contents($pidfile, $pid) || die(sprintf('Could not write PID information to %s', $pidfile));
+    }
+
+    /**
+     * workInForeground
+     *
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     */
+    protected function workInForeground(InputInterface $input): void
+    {
+        $pidfile = $input->getOption('pidfile');
+        if ($pidfile) {
+            $this->writePidFile($pidfile);
+        }
+
+        $worker_factory = $this->worker_factory;
+
+        /** @var array $queues */
+        $queues = $input->getArgument('queues');
+
+        /** @var \QueueJitsu\Worker\Worker $worker */
+        $worker = $worker_factory($queues);
+
+        $worker($input->getOption('interval'));
     }
 }

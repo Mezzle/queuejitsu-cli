@@ -32,6 +32,7 @@ class WorkFactory
     public function __invoke(ContainerInterface $container)
     {
         $worker_factory = $container->get(Worker::class);
+
         return new Work($worker_factory);
     }
 }

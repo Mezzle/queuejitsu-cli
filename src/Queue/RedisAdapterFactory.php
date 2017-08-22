@@ -42,7 +42,7 @@ class RedisAdapterFactory
      *
      * @param \Psr\Container\ContainerInterface $container
      *
-     * @return \QueueJitsu\Job\Adapter\RedisAdapter
+     * @return \QueueJitsu\Queue\Adapter\RedisAdapter
      */
     public function __invoke(ContainerInterface $container)
     {

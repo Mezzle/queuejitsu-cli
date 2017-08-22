@@ -22,7 +22,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
 $autoload_files = [
     __DIR__ . '/../../../autoload.php',
     __DIR__ . '/../autoload.php',
@@ -41,10 +40,10 @@ foreach ($autoload_files as $file) {
  * Self-called anonymous function that creates its own scope and keep the global namespace clean.
  */
 call_user_func(
-    function() {
+    function () {
         $container_files = [
             __DIR__ . '/../../../../config/container.php',
-            __DIR__ . '/../../config/container.php'
+            __DIR__ . '/../../config/container.php',
         ];
 
         foreach ($container_files as $file) {

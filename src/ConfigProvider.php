@@ -24,8 +24,6 @@
 
 namespace QueueJitsu\Cli;
 
-use Psr\Log\LoggerInterface;
-use QueueJitsu\Cli\Log\StdIO;
 use Symfony\Component\Console\Application;
 
 class ConfigProvider

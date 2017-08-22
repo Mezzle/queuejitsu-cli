@@ -3,3 +3,4 @@
 /sonar-project.properties
 /config/autoload/*.local.php
 /config/development.config.php
+/.php_cs.cache

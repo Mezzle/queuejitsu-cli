@@ -60,7 +60,8 @@ $aggregator = new \Zend\ConfigAggregator\ConfigAggregator(
 
         // Load development config if it exists
         new PhpFileProvider('config/development.config.php'),
-    ], $cacheConfig['config_cache_path']
+    ],
+    $cacheConfig['config_cache_path']
 );
 
 return $aggregator->getMergedConfig();

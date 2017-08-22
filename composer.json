@@ -1,0 +1,43 @@
+{
+    "name": "mez/queuejitsu-cli",
+    "description": "QueueJitsu CLI",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Meredith",
+            "email": "martin@sourceguru.net"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^7.1",
+        "mez/queuejitsu": "dev-setup-cli",
+        "symfony/console": "^3.3",
+        "zendframework/zend-config-aggregator": "^1.0",
+        "zendframework/zend-servicemanager": "^3.3",
+        "zfcampus/zf-development-mode": "^3.1"
+    },
+    "require-dev": {
+        "predis/predis": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "QueueJitsu\\Cli\\": [
+                "src"
+            ]
+        }
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "@development-enable"
+        ],
+        "development-disable": "zf-development-mode disable",
+        "development-enable": "zf-development-mode enable",
+        "development-status": "zf-development-mode status"
+    },
+    "repositories": {
+    }
+}

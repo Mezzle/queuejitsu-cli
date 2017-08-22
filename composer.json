@@ -50,6 +50,9 @@
         "development-enable": "zf-development-mode enable",
         "development-status": "zf-development-mode status"
     },
-    "repositories": {
+    "extra": {
+        "zf": {
+            "config-provider": "QueueJitsu\\Cli\\ConfigProvider"
+        }
     }
 }

@@ -10,7 +10,13 @@
         }
     ],
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "stickee/*": "source",
+            "mez/*": "source",
+            "*": "dist"
+        }
     },
     "require": {
         "php": "^7.1",

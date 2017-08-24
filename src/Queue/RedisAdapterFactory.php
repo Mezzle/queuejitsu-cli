@@ -24,9 +24,9 @@
 
 namespace QueueJitsu\Cli\Queue;
 
-use Monolog\Logger;
 use Predis\Client;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use QueueJitsu\Queue\Adapter\RedisAdapter;
 
@@ -43,10 +43,13 @@ class RedisAdapterFactory
      * @param \Psr\Container\ContainerInterface $container
      *
      * @return \QueueJitsu\Queue\Adapter\RedisAdapter
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function __invoke(ContainerInterface $container)
     {
-        $logger_class = $container->has(Logger::class) ? Logger::class : NullLogger::class;
+        $logger_class = $container->has(LoggerInterface::class) ? LoggerInterface::class : NullLogger::class;
 
         $logger = $container->get($logger_class);
 

@@ -60,5 +60,9 @@
         "zf": {
             "config-provider": "QueueJitsu\\Cli\\ConfigProvider"
         }
-    }
+    },
+    "bin": [
+        "bin/qjitsu",
+        "bin/qjitsu.php"
+    ]
 }

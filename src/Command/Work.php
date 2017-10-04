@@ -41,6 +41,8 @@ class Work extends Command
      * Work constructor.
      *
      * @param callable $worker_factory
+     *
+     * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __construct(callable $worker_factory)
     {
@@ -109,6 +111,8 @@ class Work extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return int|null
+     *
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -127,6 +131,8 @@ class Work extends Command
      * workInBackground
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function workInBackground(InputInterface $input): void
     {
@@ -135,11 +141,13 @@ class Work extends Command
         for ($i = 0; $i < $worker_count; ++$i) {
             $pid = pcntl_fork();
 
-            if ($pid == -1) {
+            if ($pid === -1) {
                 die(sprintf("Could not fork worker %d\n", $i));
-            } elseif (!$pid) {
+            }
+
+            if (!$pid) {
                 $pidfile = $input->getOption('pidfile');
-                if ($pidfile && $i == 0) {
+                if ($pidfile && $i === 0) {
                     $this->writePidFile($pidfile);
                 }
 
@@ -161,7 +169,7 @@ class Work extends Command
      * writePidFile
      *
      * @param string $pidfile
-     * @param null $pid
+     * @param null|int $pid
      */
     private function writePidFile(string $pidfile, $pid = null)
     {
@@ -176,6 +184,8 @@ class Work extends Command
      * workInForeground
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function workInForeground(InputInterface $input): void
     {

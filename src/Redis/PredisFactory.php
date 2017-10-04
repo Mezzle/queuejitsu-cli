@@ -40,6 +40,9 @@ class PredisFactory
      * @param \Psr\Container\ContainerInterface $container
      *
      * @return \Predis\Client
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function __invoke(ContainerInterface $container)
     {

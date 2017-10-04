@@ -27,8 +27,23 @@ namespace QueueJitsu\Cli\Command;
 use Psr\Container\ContainerInterface;
 use QueueJitsu\Worker\Worker;
 
+/**
+ * Class WorkFactory
+ *
+ * @package QueueJitsu\Cli\Command
+ */
 class WorkFactory
 {
+    /**
+     * __invoke
+     *
+     * @param \Psr\Container\ContainerInterface $container
+     *
+     * @return \QueueJitsu\Cli\Command\Work
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function __invoke(ContainerInterface $container)
     {
         $worker_factory = $container->get(Worker::class);

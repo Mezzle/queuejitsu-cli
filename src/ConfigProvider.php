@@ -24,6 +24,7 @@
 
 namespace QueueJitsu\Cli;
 
+use Predis\Client;
 use Symfony\Component\Console\Application;
 
 class ConfigProvider
@@ -45,13 +46,13 @@ class ConfigProvider
      *
      * @return array
      */
-    private function getDependencies()
+    private function getDependencies(): array
     {
         return [
             'factories' => [
                 Application::class => App\Factory::class,
                 Command\Work::class => Command\WorkFactory::class,
-                \Predis\Client::class => Redis\PredisFactory::class,
+                Client::class => Redis\PredisFactory::class,
 
             ],
         ];

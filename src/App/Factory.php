@@ -41,6 +41,10 @@ class Factory
      * @param \Psr\Container\ContainerInterface $container
      *
      * @return \Symfony\Component\Console\Application
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __invoke(ContainerInterface $container)
     {

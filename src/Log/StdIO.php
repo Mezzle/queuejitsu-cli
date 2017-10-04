@@ -49,7 +49,7 @@ class StdIO extends AbstractLogger
 
         $logline = sprintf("[%s] %s%s\n", strtoupper($level), $message, $context_output);
 
-        $handle = in_array($level, [self::ERROR_LEVELS]) ? STDERR : STDOUT;
+        $handle = in_array($level, self::ERROR_LEVELS, false) ? STDERR : STDOUT;
 
         fwrite($handle, $logline);
     }

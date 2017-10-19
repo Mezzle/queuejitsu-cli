@@ -44,9 +44,7 @@
     },
     "autoload": {
         "psr-4": {
-            "QueueJitsu\\Cli\\": [
-                "src"
-            ]
+            "QueueJitsu\\Cli\\": "src"
         }
     },
     "scripts": {

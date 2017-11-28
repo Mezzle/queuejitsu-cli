@@ -39,10 +39,10 @@ class WorkFactory
      *
      * @param \Psr\Container\ContainerInterface $container
      *
-     * @return \QueueJitsu\Cli\Command\Work
-     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     *
+     * @return \QueueJitsu\Cli\Command\Work
      */
     public function __invoke(ContainerInterface $container)
     {

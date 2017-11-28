@@ -45,12 +45,12 @@ class StdIO extends AbstractLogger
      */
     public function log($level, $message, array $context = [])
     {
-        $context_output = empty($context) ? '' : sprintf(' :: %s', json_encode($context));
+        $context_output = empty($context) ? '' : \sprintf(' :: %s', \json_encode($context));
 
-        $logline = sprintf("[%s] %s%s\n", strtoupper($level), $message, $context_output);
+        $logline = \sprintf("[%s] %s%s\n", \mb_strtoupper($level), $message, $context_output);
 
-        $handle = in_array($level, self::ERROR_LEVELS, false) ? STDERR : STDOUT;
+        $handle = \in_array($level, self::ERROR_LEVELS, false) ? STDERR : STDOUT;
 
-        fwrite($handle, $logline);
+        \fwrite($handle, $logline);
     }
 }

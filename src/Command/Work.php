@@ -110,9 +110,9 @@ class Work extends Command
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
-     *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     *
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -139,10 +139,10 @@ class Work extends Command
         $worker_count = $input->getOption('workers');
 
         for ($i = 0; $i < $worker_count; ++$i) {
-            $pid = pcntl_fork();
+            $pid = \pcntl_fork();
 
             if ($pid === -1) {
-                die(sprintf("Could not fork worker %d\n", $i));
+                die(\sprintf("Could not fork worker %d\n", $i));
             }
 
             if (!$pid) {
@@ -151,15 +151,16 @@ class Work extends Command
                     $this->writePidFile($pidfile);
                 }
 
-                $worker_factory = $this->worker_factory;
+                $factory = $this->worker_factory;
 
                 /** @var array $queues */
                 $queues = $input->getArgument('queues');
 
                 /** @var \QueueJitsu\Worker\Worker $worker */
-                $worker = $worker_factory($queues);
+                $worker = $factory($queues);
 
                 $worker($input->getOption('interval'));
+
                 break;
             }
         }
@@ -173,11 +174,11 @@ class Work extends Command
      */
     private function writePidFile(string $pidfile, $pid = null)
     {
-        if (is_null($pid)) {
-            $pid = getmypid();
+        if (\is_null($pid)) {
+            $pid = \getmypid();
         }
 
-        file_put_contents($pidfile, $pid) || die(sprintf('Could not write PID information to %s', $pidfile));
+        \file_put_contents($pidfile, $pid) || die(\sprintf('Could not write PID information to %s', $pidfile));
     }
 
     /**
@@ -194,13 +195,13 @@ class Work extends Command
             $this->writePidFile($pidfile);
         }
 
-        $worker_factory = $this->worker_factory;
+        $factory = $this->worker_factory;
 
         /** @var array $queues */
         $queues = $input->getArgument('queues');
 
         /** @var \QueueJitsu\Worker\Worker $worker */
-        $worker = $worker_factory($queues);
+        $worker = $factory($queues);
 
         $worker($input->getOption('interval'));
     }

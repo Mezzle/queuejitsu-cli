@@ -29,8 +29,9 @@ $autoload_files = [
 ];
 
 foreach ($autoload_files as $file) {
-    if (file_exists($file)) {
+    if (\file_exists($file)) {
         require $file;
+
         break;
     }
 }
@@ -38,7 +39,7 @@ foreach ($autoload_files as $file) {
 /**
  * Self-called anonymous function that creates its own scope and keep the global namespace clean.
  */
-call_user_func(
+\call_user_func(
     function () {
         $container_files = [
             __DIR__ . '/../../../../config/container.php',
@@ -46,9 +47,10 @@ call_user_func(
         ];
 
         foreach ($container_files as $file) {
-            if (file_exists($file)) {
+            if (\file_exists($file)) {
                 /** @var \Psr\Container\ContainerInterface $container */
                 $container = require $file;
+
                 break;
             }
         }

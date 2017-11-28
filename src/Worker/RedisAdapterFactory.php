@@ -40,10 +40,10 @@ class RedisAdapterFactory
      *
      * @param \Psr\Container\ContainerInterface $container
      *
-     * @return \QueueJitsu\Worker\Adapter\RedisAdapter
-     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     *
+     * @return \QueueJitsu\Worker\Adapter\RedisAdapter
      */
     public function __invoke(ContainerInterface $container)
     {

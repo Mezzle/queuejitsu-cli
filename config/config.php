@@ -33,7 +33,7 @@ $cacheConfig = [
     'config_cache_path' => 'data/config-cache.php',
 ];
 
-if (class_exists(DotEnv::class)) {
+if (\class_exists(DotEnv::class)) {
     try {
         (new Dotenv(__DIR__ . '/../'))->load();
     } catch (InvalidPathException $e) {

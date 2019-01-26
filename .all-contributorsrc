@@ -17,6 +17,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "chrisboulton",
+      "name": "Chris Boulton",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/98472?v=4",
+      "profile": "http://www.chrisboulton.com/",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7

@@ -151,7 +151,7 @@ class Work extends Command
                 $pidfile = $input->getOption('pidfile');
 
                 if ($pidfile && $i === 0) {
-                    $this->writePidFile($pidfile);
+                    $this->writePidFile((string)$pidfile);
                 }
 
                 $worker_factory = $this->worker_factory;
@@ -180,7 +180,7 @@ class Work extends Command
         $pidfile = $input->getOption('pidfile');
 
         if ($pidfile) {
-            $this->writePidFile($pidfile);
+            $this->writePidFile((string)$pidfile);
         }
 
         $worker_factory = $this->worker_factory;

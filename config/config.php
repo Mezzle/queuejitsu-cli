@@ -37,7 +37,8 @@ $cacheConfig = [
 
 if (class_exists(DotEnv::class)) {
     try {
-        (new Dotenv(__DIR__ . '/../'))->load();
+        $dotenv = Dotenv::create(__DIR__ . '/../');
+        $dotenv->load();
     } catch (InvalidPathException $e) {
         // Pass - no .env file
     }

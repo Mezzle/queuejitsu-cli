@@ -21,7 +21,7 @@
     "require": {
         "php": "^7.1",
         "ext-pcntl": "*",
-        "mez/queuejitsu": "^1",
+        "mez/queuejitsu": "^1 || ^2",
         "roave/security-advisories": "dev-master",
         "symfony/console": "^3.3",
         "zendframework/zend-config-aggregator": "^1.0",

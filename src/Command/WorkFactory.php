@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Copyright (c) 2017 Martin Meredith
  * Copyright (c) 2017 Stickee Technology Limited
@@ -39,10 +41,10 @@ class WorkFactory
      *
      * @param \Psr\Container\ContainerInterface $container
      *
-     * @return \QueueJitsu\Cli\Command\Work
-     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
+     *
+     * @return \QueueJitsu\Cli\Command\Work
      */
     public function __invoke(ContainerInterface $container)
     {

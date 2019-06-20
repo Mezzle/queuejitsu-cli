@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Copyright (c) 2017 Martin Meredith
  * Copyright (c) 2017 Stickee Technology Limited
@@ -110,9 +112,9 @@ class Work extends Command
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return int|null
-     *
      * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
+     *
+     * @return int|null
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -147,6 +149,7 @@ class Work extends Command
 
             if (!$pid) {
                 $pidfile = $input->getOption('pidfile');
+
                 if ($pidfile && $i === 0) {
                     $this->writePidFile($pidfile);
                 }
@@ -166,21 +169,6 @@ class Work extends Command
     }
 
     /**
-     * writePidFile
-     *
-     * @param string $pidfile
-     * @param null|int $pid
-     */
-    private function writePidFile(string $pidfile, $pid = null)
-    {
-        if (is_null($pid)) {
-            $pid = getmypid();
-        }
-
-        file_put_contents($pidfile, $pid) || die(sprintf('Could not write PID information to %s', $pidfile));
-    }
-
-    /**
      * workInForeground
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input
@@ -190,6 +178,7 @@ class Work extends Command
     protected function workInForeground(InputInterface $input): void
     {
         $pidfile = $input->getOption('pidfile');
+
         if ($pidfile) {
             $this->writePidFile($pidfile);
         }
@@ -203,5 +192,20 @@ class Work extends Command
         $worker = $worker_factory($queues);
 
         $worker($input->getOption('interval'));
+    }
+
+    /**
+     * writePidFile
+     *
+     * @param string $pidfile
+     * @param null|int $pid
+     */
+    private function writePidFile(string $pidfile, $pid = null)
+    {
+        if (is_null($pid)) {
+            $pid = getmypid();
+        }
+
+        file_put_contents($pidfile, $pid) || die(sprintf('Could not write PID information to %s', $pidfile));
     }
 }

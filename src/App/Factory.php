@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Copyright (c) 2017 Martin Meredith
  * Copyright (c) 2017 Stickee Technology Limited
@@ -40,11 +42,11 @@ class Factory
      *
      * @param \Psr\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\Console\Application
-     *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @throws \Symfony\Component\Console\Exception\LogicException
+     *
+     * @return \Symfony\Component\Console\Application
      */
     public function __invoke(ContainerInterface $container)
     {

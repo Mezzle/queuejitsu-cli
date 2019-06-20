@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Copyright (c) 2017 Martin Meredith
  * Copyright (c) 2017 Stickee Technology Limited
@@ -47,7 +49,7 @@ class StdIO extends AbstractLogger
     {
         $context_output = empty($context) ? '' : sprintf(' :: %s', json_encode($context));
 
-        $logline = sprintf("[%s] %s%s\n", strtoupper($level), $message, $context_output);
+        $logline = sprintf("[%s] %s%s\n", mb_strtoupper($level), $message, $context_output);
 
         $handle = in_array($level, self::ERROR_LEVELS, false) ? STDERR : STDOUT;
 

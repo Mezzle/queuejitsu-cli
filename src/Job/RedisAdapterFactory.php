@@ -1,8 +1,6 @@
 <?php
-
-declare(strict_types=1);
-/**
- * Copyright (c) 2017 Martin Meredith
+/*
+ * Copyright (c) 2017 - 2020 Martin Meredith
  * Copyright (c) 2017 Stickee Technology Limited
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,6 +22,8 @@ declare(strict_types=1);
  * SOFTWARE.
  */
 
+declare(strict_types=1);
+
 namespace QueueJitsu\Cli\Job;
 
 use Predis\Client;
@@ -41,9 +41,6 @@ class RedisAdapterFactory
      * __invoke
      *
      * @param \Psr\Container\ContainerInterface $container
-     *
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
      *
      * @return \QueueJitsu\Job\Adapter\RedisAdapter
      */

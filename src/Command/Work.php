@@ -1,8 +1,6 @@
 <?php
-
-declare(strict_types=1);
-/**
- * Copyright (c) 2017 Martin Meredith
+/*
+ * Copyright (c) 2017 - 2020 Martin Meredith
  * Copyright (c) 2017 Stickee Technology Limited
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,6 +22,8 @@ declare(strict_types=1);
  * SOFTWARE.
  */
 
+declare(strict_types=1);
+
 namespace QueueJitsu\Cli\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -43,8 +43,6 @@ class Work extends Command
      * Work constructor.
      *
      * @param callable $worker_factory
-     *
-     * @throws \Symfony\Component\Console\Exception\LogicException
      */
     public function __construct(callable $worker_factory)
     {
@@ -55,7 +53,7 @@ class Work extends Command
     /**
      * configure
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Starts Working');
         $this->setHelp('This command starts worker(s) to process the queue.');
@@ -112,9 +110,7 @@ class Work extends Command
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
-     *
-     * @return int|null
+     * @return int
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -133,8 +129,6 @@ class Work extends Command
      * workInBackground
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function workInBackground(InputInterface $input): void
     {
@@ -148,10 +142,11 @@ class Work extends Command
             }
 
             if (!$pid) {
+                /** @var string $pidfile */
                 $pidfile = $input->getOption('pidfile');
 
                 if ($pidfile && $i === 0) {
-                    $this->writePidFile((string)$pidfile);
+                    $this->writePidFile($pidfile);
                 }
 
                 $worker_factory = $this->worker_factory;
@@ -162,7 +157,10 @@ class Work extends Command
                 /** @var \QueueJitsu\Worker\Worker $worker */
                 $worker = $worker_factory($queues);
 
-                $worker($input->getOption('interval'));
+                /** @var int $interval */
+                $interval = $input->getOption('interval');
+
+                $worker($interval);
                 break;
             }
         }
@@ -172,15 +170,14 @@ class Work extends Command
      * workInForeground
      *
      * @param \Symfony\Component\Console\Input\InputInterface $input
-     *
-     * @throws \Symfony\Component\Console\Exception\InvalidArgumentException
      */
     protected function workInForeground(InputInterface $input): void
     {
+        /** @var string $pidfile */
         $pidfile = $input->getOption('pidfile');
 
         if ($pidfile) {
-            $this->writePidFile((string)$pidfile);
+            $this->writePidFile($pidfile);
         }
 
         $worker_factory = $this->worker_factory;
@@ -191,21 +188,26 @@ class Work extends Command
         /** @var \QueueJitsu\Worker\Worker $worker */
         $worker = $worker_factory($queues);
 
-        $worker($input->getOption('interval'));
+        /** @var int $interval */
+        $interval = $input->getOption('interval');
+
+        $worker($interval);
     }
 
     /**
      * writePidFile
      *
      * @param string $pidfile
-     * @param null|int $pid
+     * @param null $pid
      */
-    private function writePidFile(string $pidfile, $pid = null)
+    private function writePidFile(string $pidfile, $pid = null): void
     {
         if (is_null($pid)) {
             $pid = getmypid();
         }
 
-        file_put_contents($pidfile, $pid) || die(sprintf('Could not write PID information to %s', $pidfile));
+        if (!file_put_contents($pidfile, $pid)) {
+            die(sprintf('Could not write PID information to %s', $pidfile));
+        }
     }
 }

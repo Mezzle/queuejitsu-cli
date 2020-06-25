@@ -1,8 +1,6 @@
 <?php
-
-declare(strict_types=1);
-/**
- * Copyright (c) 2017 Martin Meredith
+/*
+ * Copyright (c) 2017 - 2020 Martin Meredith
  * Copyright (c) 2017 Stickee Technology Limited
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,6 +22,8 @@ declare(strict_types=1);
  * SOFTWARE.
  */
 
+declare(strict_types=1);
+
 namespace QueueJitsu\Cli\App;
 
 use Psr\Container\ContainerInterface;
@@ -42,10 +42,6 @@ class Factory
      *
      * @param \Psr\Container\ContainerInterface $container
      *
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     * @throws \Symfony\Component\Console\Exception\LogicException
-     *
      * @return \Symfony\Component\Console\Application
      */
     public function __invoke(ContainerInterface $container)
@@ -56,7 +52,7 @@ class Factory
         $work_command = $container->get(Command\Work::class);
 
         $app->add($work_command);
-        $app->setDefaultCommand($work_command->getName());
+        $app->setDefaultCommand((string)$work_command->getName());
 
         return $app;
     }

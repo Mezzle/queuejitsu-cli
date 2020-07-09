@@ -11,8 +11,8 @@
   ],
   "require": {
     "php": "^7.2 || ^8.0",
-    "ext-json": "^1.6",
-    "ext-mbstring": "^7.2",
+    "ext-json": "*",
+    "ext-mbstring": "*",
     "ext-pcntl": "*",
     "laminas/laminas-config-aggregator": "^1.2",
     "laminas/laminas-development-mode": "^3.2",

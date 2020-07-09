@@ -17,7 +17,7 @@ jobs:
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ~/.composer/cache
-          key: ${{ runner.os }}-build-composer-cache-${{ matrix.php_version }}-${{ hashFiles('**/composer.lock') }}
+          key: ${{ runner.os }}-build-composer-cache-${{ matrix.php_version }}-${{ hashFiles('**/composer.json') }}
           restore-keys: |
             ${{ runner.os }}-build-composer-cache-${{ matrix.php_version }}-
             ${{ runner.os }}-build-composer-cache-

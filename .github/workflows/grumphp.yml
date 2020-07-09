@@ -2,7 +2,7 @@ name: GrumPHP
 on: push
 
 jobs:
-  grumphp:
+  ci/grumphp:
     runs-on: ubuntu-latest
     strategy:
       matrix:

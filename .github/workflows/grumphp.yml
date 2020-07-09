@@ -12,6 +12,16 @@ jobs:
         - '7.4'
     steps:
       - uses: actions/checkout@v2
+      - name: Cache Composer Cache
+          uses: actions/cache@v2
+          with:
+            # npm cache files are stored in `~/.npm` on Linux/macOS
+            path: ~/.composer/cache
+            key: ${{ runner.os }}-build-composer-cache-${{ matrix.php_version }}-${{ hashFiles('**/composer.lock') }}
+            restore-keys: |
+              ${{ runner.os }}-build-composer-cache-${{ matrix.php_version }}-
+              ${{ runner.os }}-build-composer-cache-
+              ${{ runner.os }}-
       - name: Install PHP
         run: |
           sudo add-apt-repository ppa:ondrej/php -y

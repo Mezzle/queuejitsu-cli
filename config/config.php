@@ -24,8 +24,6 @@
 
 declare(strict_types=1);
 
-use Dotenv\Dotenv;
-use Dotenv\Exception\InvalidPathException;
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
@@ -33,15 +31,6 @@ use Laminas\ConfigAggregator\PhpFileProvider;
 $cacheConfig = [
     'config_cache_path' => 'data/config-cache.php',
 ];
-
-if (class_exists(DotEnv::class)) {
-    try {
-        $dotenv = Dotenv::create(__DIR__ . '/../');
-        $dotenv->load();
-    } catch (InvalidPathException $e) {
-        // Pass - no .env file
-    }
-}
 
 $aggregator = new ConfigAggregator(
     [
